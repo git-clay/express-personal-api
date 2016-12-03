@@ -24,6 +24,18 @@
           <h1>Under Construction</h1>
           <h4><a href="/api">Read My API Documentation</a></h4>
         </div>
+        <h1>New Project!</h1>
+              <form action="/api/project" method="post">
+                <input type="text" name="name" placeholder="Project Name"><br>
+                <input type="text" name="platform" placeholder="Platform"><br>
+                <input type="text" name="purpose" placeholder="Purpose"><br>
+                <input type="text" name="skills" placeholder="Skills(separate with commas)"><br>
+                <input type="text" name="items_needed" placeholder="materials(separate with commas")><br>
+                <input type="url" name="source" placeholder="Source"><br>
+                <input type="radio" name="complete" value="true">True<br>
+                <input type="radio" name="complete" value="false">False<br>
+                <input type="submit" value="Submit">
+              </form>
       </div>
     </div>
   </body>

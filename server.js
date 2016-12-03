@@ -12,7 +12,7 @@ app.use(bodyParser.json());
  * DATABASE *
  ************/
 
-// var db = require('./models');
+ var db = require('./models');
 
 /**********
  * ROUTES *
@@ -45,11 +45,71 @@ app.get('/api', function api_index(req, res) {
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "POST", path: "/api/campsites", description: "E.g. Create a new campsite"} // CHANGE ME
+      {method: "GET", path: "/api/projects", description: "all projects to pick from"}, // CHANGE ME
+      {method: "POST", path: "/api/projects", description: "E.g. Create a new project"} // CHANGE ME
     ]
   });
 });
 
+// get profile √
+app.get('/api/profile', function (req, res) {
+  // send profile as JSON response
+
+  db.Profile.find()
+    .populate('profile')    // populate fills in the description id with all the profile data
+    .exec(function(err, profile){
+      if (err) { return console.log("index error: " + err); }
+      res.json(profile);
+    });
+});
+
+//INDEX √
+app.get('/api/project', function (req, res){
+console.log('get project');
+  db.Project.find()
+    .populate('project')
+    .exec(function(err, project){
+      if (err) { return console.log("index error: " + err); }
+    res.json(project);
+
+    });
+});
+//SHOW √
+app.get('/api/project/:id', function (req, res){
+var projId = req.params.id;
+console.log('get project by id', projId);
+  db.Project.find(req.params.id,function(err,project){
+      if (err){return console.log('error:',err);}
+      res.json(project);
+  });
+});
+//CREATE √ needs work on id
+app.post('/api/project', function (req, res){
+console.log('post new project');
+  var newProj = new db.Project({
+        id: db.Project.length+1,
+        name: req.body.name,
+        platform: req.body.platform,
+        purpose: req.body.purpose,
+        skills: req.body.skills,
+        items_needed: req.body.items_needed,
+        source: req.body.source,
+        complete: req.body.complete
+  });
+  newProj.save(function(err, proj){
+    if(err){return console.log('error:",err');}
+    console.log("posted", proj.name);
+    res.json(proj);
+  });
+});
+//UPDATE
+app.put('/api/project/:id', function (req, res){
+console.log('get project');
+});
+//DELETE
+app.delete('/api/project/:id', function (req, res){
+console.log('delete project by id');
+});
 /**********
  * SERVER *
  **********/
