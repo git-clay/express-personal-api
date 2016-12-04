@@ -82,3 +82,7 @@ db.Project.remove({},function(err,projects) {
 		});
 	});
 });
+
+
+
+//// to seed heroku >> in terminal type "heroku run bash" then "node seed.js"

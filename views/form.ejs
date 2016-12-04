@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+  <div class="container">
+  <% for(var i=0; i< project.length; i++) {  %>
+    <ul>
+      <li><b>Name : </b> <%= project[i].name %></li>
+      <li><b>Purpose : </b> <%= project[i].purpose %></li>
+      <li><%-link_to('edit', '/api/project/put'+[i].id.patch)%></li>
+    </ul>
+  <% } %>
+  </div>
+  <hr>
+  <div class="container">
+  	<% include ./put.ejs%>
+  </div>
+
+
+</body>
+</html>
