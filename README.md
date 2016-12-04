@@ -1,6 +1,6 @@
 I always have trouble keeping my project ideas organized.  This api is a good reference for anyone looking to start a project but not knowing what they want to make!
 
-<a href"https://tranquil-mountain-12063.herokuapp.com/">Check out the Heroku site here</a>
+[Check out the Heroku site here](https://tranquil-mountain-12063.herokuapp.com/)
 
 
 # <img src="https://cloud.githubusercontent.com/assets/7833470/10423298/ea833a68-7079-11e5-84f8-0a925ab96893.png" width="60"> Personal API
