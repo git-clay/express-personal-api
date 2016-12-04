@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 
  var db = require('./models');
 
+
 /**********
  * ROUTES *
  **********/
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 // Serve static files from the `/public` directory:
 // i.e. `/images`, `/scripts`, `/styles`
 app.use(express.static('public'));
+app.use(express.static('seed.js'));
 
 /*
  * HTML Endpoints
@@ -45,8 +47,8 @@ app.get('/api', function api_index(req, res) {
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints"},
       {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "GET", path: "/api/projects", description: "all projects to pick from"}, // CHANGE ME
-      {method: "POST", path: "/api/projects", description: "E.g. Create a new project"} // CHANGE ME
+      {method: "GET", path: "/api/project", description: "all projects to pick from"}, // CHANGE ME
+      {method: "POST", path: "/api/project", description: "E.g. Create a new project"} // CHANGE ME
     ]
   });
 });
@@ -78,7 +80,7 @@ console.log('get project');
 app.get('/api/project/:id', function (req, res){
 var projId = req.params.id;
 console.log('get project by id', projId);
-  db.Project.find(req.params.id,function(err,project){
+  db.Project.findOne({id: req.params.id},function(err,project){
       if (err){return console.log('error:',err);}
       res.json(project);
   });
@@ -87,7 +89,6 @@ console.log('get project by id', projId);
 app.post('/api/project', function (req, res){
 console.log('post new project');
   var newProj = new db.Project({
-        id: db.Project.length+1,
         name: req.body.name,
         platform: req.body.platform,
         purpose: req.body.purpose,
@@ -96,6 +97,7 @@ console.log('post new project');
         source: req.body.source,
         complete: req.body.complete
   });
+  console.log(newProj);
   newProj.save(function(err, proj){
     if(err){return console.log('error:",err');}
     console.log("posted", proj.name);
@@ -105,6 +107,22 @@ console.log('post new project');
 //UPDATE
 app.put('/api/project/:id', function (req, res){
 console.log('get project');
+var projId = req.params.id;
+  db.Project.findOne({id: projId}, function(err,project){
+      if (err){return console.log('error:',err);}
+        if(req.body.name) project.name = req.body.name;
+        if(req.body.platform) project.platform = req.body.platform;
+        if(req.body.purpose) project.purpose = req.body.purpose;
+        if(req.body.skills) project.skills = req.body.skills;
+        if(req.body.items_needed) project.items_needed = req.body.items_needed;
+        if(req.body.source) project.source = req.body.source;
+        if(req.body.complete) project.complete = req.body.complete;
+        console.log(project.name + req.body.name);
+        project.save(function(err,proj){
+        if(err){return console.log('error:",err');}
+         res.json(project.name+' updated');
+    });
+  });
 });
 //DELETE
 app.delete('/api/project/:id', function (req, res){
