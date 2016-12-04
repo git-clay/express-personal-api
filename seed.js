@@ -2,7 +2,6 @@
 // simply run: `node seed.js` from the root of this project folder.
 var mongoose = require('mongoose');
 var db = require('./models');
-mongoose.connect(process.env.MONGOLAB_URI);
 
 
 var new_profile = new db.Profile ({name:"Clay Smith",
@@ -83,4 +82,3 @@ db.Project.remove({},function(err,projects) {
 		});
 	});
 });
-			mongoose.close();
