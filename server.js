@@ -84,6 +84,9 @@ console.log('get project by id', projId);
       res.json(project);
   });
 });
+
+//query search (?platform = arduino)
+
 //CREATE √ needs work on id
 app.post('/api/project', function (req, res){
 console.log('post new project');
@@ -125,7 +128,7 @@ var projId = req.params.id;
     });
   });
 });
-//DELETE
+//DELETE √
 app.delete('/api/project/:id', function (req, res){
 console.log('delete project by id');
   db.Project.findOneAndRemove({id: req.params.id},function(err,project){
