@@ -56,9 +56,8 @@ app.get('/api', function api_index(req, res) {
 // get profile √
 app.get('/api/profile', function (req, res) {
   // send profile as JSON response
-
   db.Profile.find()
-    .populate('profile')    // populate fills in the description id with all the profile data
+    .populate('profile')
     .exec(function(err, profile){
       if (err) { return console.log("index error: " + err); }
       res.json(profile);
@@ -88,6 +87,8 @@ console.log('get project by id', projId);
 //CREATE √ needs work on id
 app.post('/api/project', function (req, res){
 console.log('post new project');
+   //this gets project length for id  db.Project.find().exec(function(err,project){console.log(project.length);});
+
   var newProj = new db.Project({
         name: req.body.name,
         platform: req.body.platform,
@@ -104,12 +105,13 @@ console.log('post new project');
     res.json(proj);
   });
 });
-//UPDATE
+//UPDATE √ß
 app.put('/api/project/:id', function (req, res){
 console.log('get project');
 var projId = req.params.id;
   db.Project.findOne({id: projId}, function(err,project){
       if (err){return console.log('error:',err);}
+        if(req.body.id) project.id = req.body.id;
         if(req.body.name) project.name = req.body.name;
         if(req.body.platform) project.platform = req.body.platform;
         if(req.body.purpose) project.purpose = req.body.purpose;
@@ -117,8 +119,7 @@ var projId = req.params.id;
         if(req.body.items_needed) project.items_needed = req.body.items_needed;
         if(req.body.source) project.source = req.body.source;
         if(req.body.complete) project.complete = req.body.complete;
-        console.log(project.name + req.body.name);
-        project.save(function(err,proj){
+    project.save(function(err,proj){
         if(err){return console.log('error:",err');}
          res.json(project.name+' updated');
     });
@@ -127,6 +128,10 @@ var projId = req.params.id;
 //DELETE
 app.delete('/api/project/:id', function (req, res){
 console.log('delete project by id');
+  db.Project.findOneAndRemove({id: req.params.id},function(err,project){
+      if (err){return console.log('error:',err);}
+      res.json(project);
+  });
 });
 /**********
  * SERVER *
