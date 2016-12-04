@@ -45,10 +45,13 @@ app.get('/api', function api_index(req, res) {
     documentation_url: "https://github.com/git-clay/express-personal-api/README.md", // CHANGE ME
     base_url: "https://tranquil-mountain-12063.herokuapp.com/", // CHANGE ME
     endpoints: [
-      {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
+      {method: "GET", path: "/api", description: "Describes all available endpoints aka: you are here"},
+      {method: "GET", path: "/api/profile", description: "The basics about me"}, // CHANGE ME
       {method: "GET", path: "/api/project", description: "all projects to pick from"}, // CHANGE ME
-      {method: "POST", path: "/api/project", description: "E.g. Create a new project"} // CHANGE ME
+      {method: "GET", path: "/api/project/:id", description: "select project by id #"}, // CHANGE ME
+      {method: "POST", path: "/api/project", description: "Create a new project"}, // CHANGE ME
+      {method: "PUT", path: "/api/project/:id", description: "Edit a project"}, // CHANGE ME
+      {method: "DELETE", path: "/api/project/:id", description: "DESTROY!!!!"} // CHANGE ME
     ]
   });
 });
