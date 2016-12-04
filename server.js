@@ -31,7 +31,9 @@ app.use(express.static('seed.js'));
 app.get('/', function homepage(req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-
+app.get('/seed', function seed(req, res) {
+  res.sendFile(__dirname + './seed.js');
+});
 
 /*
  * JSON API Endpoints
