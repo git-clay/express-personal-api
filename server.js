@@ -93,10 +93,9 @@ console.log('get project by id', projId);
 //query search (?platform = arduino)
 
 //CREATE √ needs work on id
+
 app.post('/api/project', function (req, res){
 console.log('post new project');
-   //this gets project length for id  db.Project.find().exec(function(err,project){console.log(project.length);});
-
   var newProj = new db.Project({
         name: req.body.name,
         platform: req.body.platform,
